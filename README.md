@@ -106,3 +106,9 @@ INFO:     Started server process [XXXX]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
+
+## Licensing
+
+All packages in this repository are open-source software and licensed under the [MIT License](https://github.com/joakimvivas/marco-bot/blob/main/LICENSE). By contributing in this repository, you agree to release your code under this license as well.
+
+Let's build the future of **Instagram Analyzer** development together! 🤖🚀
