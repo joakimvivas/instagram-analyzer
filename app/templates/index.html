@@ -1,0 +1,45 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de Instagram</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <h1 class="text-center text-3xl font-bold">Analizador de Instagram</h1>
+
+        <form action="/investigate" method="post" class="mt-5">
+            <div class="flex justify-center">
+                <input name="instagram_account" class="border border-gray-400 p-2 rounded" placeholder="Cuenta de Instagram (pública)" required>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">Investigar</button>
+            </div>
+
+            <!-- Selector para la cantidad de fotos a analizar -->
+            <div class="flex justify-center mt-3">
+                <label for="num_photos" class="mr-2">Número de fotos a analizar:</label>
+                <select name="num_photos" class="border border-gray-400 p-2 rounded">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option> <!-- Valor por defecto -->
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </form>
+
+        <!-- Botón para listar todas las investigaciones previas -->
+        <div class="mt-10 text-center">
+            <a href="/list-investigations" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Ver Investigaciones Previas</a>
+        </div>
+
+        {% if error %}
+            <div class="mt-5 text-center text-red-500">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

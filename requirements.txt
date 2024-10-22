@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+jinja2
+instaloader
+python-multipart
+sse-starlette
+transformers
+torch
+torchvision
+pillow

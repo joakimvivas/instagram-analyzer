@@ -1,0 +1,103 @@
+<!-- results.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de {{ instagram_account }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <h1 class="text-center text-3xl font-bold">Resultados de {{ instagram_account }}</h1>
+
+        <!-- Mostrar errores si no se pudo realizar el análisis -->
+        {% if error %}
+            <div class="mt-5 p-4 bg-red-100 border border-red-400 text-red-700">
+                <p>{{ error }}</p>
+            </div>
+        {% else %}
+            <!-- Área para mostrar el progreso -->
+            <div id="progress" class="mt-5 p-4 bg-yellow-100 border border-yellow-400 rounded">
+                <h2 class="text-xl font-semibold">Progreso del Análisis:</h2>
+                <ul id="progress-list" class="list-disc pl-5 mt-2">
+                    <li>Iniciando análisis...</li>
+                </ul>
+            </div>
+            
+            <!-- Área para mostrar resultados una vez completados -->
+            <div id="results" class="hidden">
+                <h2 class="text-xl font-semibold mt-5">Fotos Analizadas:</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+                    {% for photo in photos %}
+                        <div class="bg-white p-4 shadow rounded">
+                            <img src="{{ photo.image_url }}" class="w-full h-64 object-cover rounded" alt="Instagram Photo">
+                            <p class="mt-2"><strong>Likes:</strong> {{ photo.likes }} (Average Likes: {{ average_likes }})</p>
+                            <p><strong>Date:</strong> {{ photo.date }}</p>
+                            <p><strong>Description:</strong> {{ photo.description }}</p>
+                            <p><strong>Hashtags:</strong> 
+                                {% if photo.hashtags %}
+                                    {{ photo.hashtags | join(', ') }}
+                                {% else %}
+                                    Ninguno
+                                {% endif %}
+                            </p>
+                            <p><strong>Image Quality:</strong> {{ photo.quality_score }} de 100</p>
+                            <p><strong>Description Sentiment:</strong> {{ photo.sentiment }}</p>
+                            <p><strong>Global Scoring:</strong> {{ photo.global_scoring }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Botón para volver a la página principal -->
+            <div class="mt-10 text-center">
+                <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Nueva Investigación</a>
+            </div>
+
+            <!-- Botón para volver a realizar la investigación -->
+            <div class="mt-4 text-center">
+                <form action="/reanalyze" method="post">
+                    <input type="hidden" name="instagram_account" value="{{ instagram_account }}">
+
+                    <label for="num_photos" class="mr-2">Número de fotos a analizar:</label>
+                    <select name="num_photos" class="border border-gray-400 p-2 rounded">
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option> <!-- Valor por defecto -->
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
+
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Volver a realizar la investigación</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const instagramAccount = "{{ instagram_account }}";
+        const progressList = document.getElementById('progress-list');
+        
+        const evtSource = new EventSource(`/progress/${instagramAccount}`);
+        evtSource.onmessage = function(event) {
+            const newMessage = document.createElement('li');
+            newMessage.textContent = event.data;
+            progressList.appendChild(newMessage);
+    
+            // Verificar si el análisis se ha completado
+            if (event.data.includes("Análisis completado exitosamente")) {
+                // Redirigir automáticamente a la página de resultados
+                window.location.href = `/results/${instagramAccount}`;
+                evtSource.close();
+            }
+    
+            // Manejar errores
+            if (event.data.startsWith("Error")) {
+                document.getElementById('progress').classList.add('hidden');
+                evtSource.close();
+            }
+        };
+    </script>    
+</body>
+</html>
