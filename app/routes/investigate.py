@@ -11,7 +11,7 @@ from app.services.sentiment_analysis_service import analyze_sentiment
 from app.services.image_analysis_service import analyze_image_quality
 
 # Configuración de logging para asegurar que los mensajes aparezcan en la consola
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(message)s')
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
