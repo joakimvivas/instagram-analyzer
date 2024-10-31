@@ -5,20 +5,23 @@ sentiment_analyzer = pipeline("sentiment-analysis")
 
 def analyze_sentiment(description: str):
     if description:
-        result = sentiment_analyzer(description)[0]
-        label = result['label']
-        score = result['score']
-        
-        # Log de depuración para mostrar los resultados detallados
-        print(f"Sentiment Analysis - Description: {description[:50]}...")  # Primeros 50 caracteres
-        print(f"Result: {result}\nLabel: {label}, Score: {score}\n")
+        try:
+            # Intento de análisis con mensaje de entrada y salida
+            print(f"Executing sentiment analysis for description: {description[:50]}...")
+            result = sentiment_analyzer(description)[0]
+            label = result['label']
+            score = result['score']
 
-        # Ajustar el umbral de neutralidad para pruebas
-        if score < 0.4:  # Umbral más bajo para verificar resultados
-            sentiment = "NEUTRAL"
-        else:
-            sentiment = "POSITIVE" if label == "POSITIVE" else "NEGATIVE"
+            print(f"Sentiment Analysis Result: {result}")  # Log completo
+            if score < 0.4:
+                sentiment = "NEUTRAL"
+            else:
+                sentiment = "POSITIVE" if label == "POSITIVE" else "NEGATIVE"
+        except Exception as e:
+            print(f"Error in sentiment analysis: {str(e)}")
+            sentiment = "NEUTRAL"  # Asigna "NEUTRO" en caso de error
     else:
+        print("No description provided; setting sentiment to NEUTRAL.")
         sentiment = "NEUTRAL"
     
     return sentiment
