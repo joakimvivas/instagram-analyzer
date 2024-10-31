@@ -83,8 +83,10 @@ async def process_instagram_account(instagram_account: str, request: Request, nu
             try:
                 if description:
                     sentiment = analyze_sentiment(description)[0]['label']  # Obtener el sentimiento
+                    progress_messages[instagram_account].append(f"Sentimiento de la imagen {count}: {sentiment}")
                 else:
                     sentiment = "Neutro"  # Si no hay descripción, considerarlo neutro
+                    progress_messages[instagram_account].append(f"Sentimiento de la imagen {count}: {sentiment}")
             except Exception as e:
                 sentiment = "Neutro"  # Si falla el análisis, se considera neutro
                 progress_messages[instagram_account].append(f"Error en análisis de sentimiento para {count}: {str(e)}")

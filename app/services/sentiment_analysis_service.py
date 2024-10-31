@@ -9,6 +9,9 @@ def analyze_sentiment(description: str):
         label = result['label']
         score = result['score']
         
+        # Log de depuración para mostrar los resultados
+        print(f"Description: {description}\nResult: {result}\nLabel: {label}, Score: {score}\n")
+
         # Interpretar el resultado para agregar una categoría "NEUTRAL" cuando el score sea bajo
         if score < 0.6:  # Umbral ajustable para definir "neutralidad"
             sentiment = "NEUTRAL"
