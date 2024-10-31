@@ -1,18 +1,22 @@
 from transformers import pipeline
 
-# Inicializar el pipeline de análisis de sentimiento con un modelo explícito
-sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+# Inicializa el pipeline especificando tanto el modelo como la revisión
+sentiment_analyzer = pipeline(
+    "sentiment-analysis",
+    model="distilbert-base-uncased-finetuned-sst-2-english",
+    revision="714eb0f"  # Confirmamos la revisión exacta del modelo
+)
 
 def analyze_sentiment(description: str):
     if description:
         try:
-            print(f"Analyzing sentiment for description: '{description[:50]}...'")
+            print(f"Analyzing sentiment for description: '{description[:50]}...'")  # Registro inicial
             result = sentiment_analyzer(description)[0]
             label = result['label']
             score = result['score']
             
             # Registro detallado para confirmar resultados del análisis
-            print(f"Sentiment Analysis Result: {result}")
+            print(f"Sentiment Analysis Result: {result}")  # Muestra label y score
             
             if score < 0.4:
                 sentiment = "NEUTRAL"
