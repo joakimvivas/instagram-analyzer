@@ -17,8 +17,3 @@ def analyze_sentiment(description: str):
     else:
         sentiment = "NEUTRAL"
     return sentiment
-
-# Prueba directa para confirmar análisis de sentimiento
-if __name__ == "__main__":
-    test_description = "Today is a fantastic day to learn something new!"
-    print(f"Sentiment analysis test result: {analyze_sentiment(test_description)}")

@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: instagram-analyzer
+    ports:
+      - "8010:3000"
+    volumes:
+      - .:/app
+    restart: always
