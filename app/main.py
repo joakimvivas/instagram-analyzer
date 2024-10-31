@@ -3,10 +3,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from app.routes import investigate, reanalyze, progress, list_investigations, view_investigation
-import logging
-
-# Configurar logging para toda la aplicación
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(message)s')
 
 app = FastAPI()
 

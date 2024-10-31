@@ -97,6 +97,12 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 3000
 ```
 
+If you want to run the application in debug mode, you can use the following command:
+
+```sh
+uvicorn app.main:app --reload --host 0.0.0.0 --port 3000 --log-level debug
+```
+
 4. You should see an output similar to:
 
 ```
