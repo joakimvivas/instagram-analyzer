@@ -72,11 +72,11 @@ The project relies on several **Python libraries**:
 1. Create the Python virtual environment
 
 ```sh
-python3 -m venv intagram-scraping
+python3 -m venv instagram-scraping
 ```
 
 ```sh
-source intagram-scraping/bin/activate
+source instagram-scraping/bin/activate
 ```
 
 2. Install dependencies:
