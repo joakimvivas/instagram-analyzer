@@ -14,6 +14,7 @@ def analyze_sentiment(description: str):
         tokenizer=AutoTokenizer.from_pretrained(model_name, revision="714eb0f")
     )
 
+    print(f"Entering analyze_sentiment with description: {description[:50]}")  # Log para confirmar entrada
     if description:
         try:
             # Registrar que se realiza el análisis
