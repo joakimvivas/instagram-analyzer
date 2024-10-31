@@ -1,23 +1,25 @@
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
 
 def analyze_sentiment(description: str):
     if description:
         try:
-            # Inicializamos el pipeline con el modelo especificado en cada llamada para asegurarnos
+            # Especificar el modelo y asegurarnos de que cargue correctamente
+            model_name = "distilbert-base-uncased-finetuned-sst-2-english"
             sentiment_analyzer = pipeline(
                 "sentiment-analysis",
-                model="distilbert-base-uncased-finetuned-sst-2-english",
+                model=AutoModelForSequenceClassification.from_pretrained(model_name),
+                tokenizer=AutoTokenizer.from_pretrained(model_name),
                 revision="714eb0f"
             )
-            print(f"Analyzing sentiment for description: '{description[:50]}...'")  # Log inicial
+            print(f"Analyzing sentiment for description: '{description[:50]}...'")  # Registro inicial
+
+            # Realizar el análisis de sentimiento y registrar el resultado
             result = sentiment_analyzer(description)[0]
             label = result['label']
             score = result['score']
-            
-            # Log detallado para confirmar el resultado
-            print(f"Sentiment Analysis Result: {result}")  # Muestra label y score
-            
-            # Condicional para establecer "NEUTRAL" cuando la puntuación es baja
+            print(f"Sentiment Analysis Result: {result}")  # Mostrar label y score
+
+            # Usar un umbral para establecer "NEUTRAL" si la confianza es baja
             if score < 0.4:
                 sentiment = "NEUTRAL"
             else:
