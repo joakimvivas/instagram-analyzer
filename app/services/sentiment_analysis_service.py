@@ -1,23 +1,23 @@
 from transformers import pipeline
 
-# Inicializa el pipeline especificando tanto el modelo como la revisión
-sentiment_analyzer = pipeline(
-    "sentiment-analysis",
-    model="distilbert-base-uncased-finetuned-sst-2-english",
-    revision="714eb0f"  # Confirmamos la revisión exacta del modelo
-)
-
 def analyze_sentiment(description: str):
     if description:
         try:
-            print(f"Analyzing sentiment for description: '{description[:50]}...'")  # Registro inicial
+            # Inicializamos el pipeline con el modelo especificado en cada llamada para asegurarnos
+            sentiment_analyzer = pipeline(
+                "sentiment-analysis",
+                model="distilbert-base-uncased-finetuned-sst-2-english",
+                revision="714eb0f"
+            )
+            print(f"Analyzing sentiment for description: '{description[:50]}...'")  # Log inicial
             result = sentiment_analyzer(description)[0]
             label = result['label']
             score = result['score']
             
-            # Registro detallado para confirmar resultados del análisis
+            # Log detallado para confirmar el resultado
             print(f"Sentiment Analysis Result: {result}")  # Muestra label y score
             
+            # Condicional para establecer "NEUTRAL" cuando la puntuación es baja
             if score < 0.4:
                 sentiment = "NEUTRAL"
             else:
