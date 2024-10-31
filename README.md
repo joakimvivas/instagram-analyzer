@@ -72,11 +72,11 @@ The project relies on several **Python libraries**:
 1. Create the Python virtual environment
 
 ```sh
-python3 -m venv intagram-scraping
+python3 -m venv instagram-scraping
 ```
 
 ```sh
-source intagram-scraping/bin/activate
+source instagram-scraping/bin/activate
 ```
 
 2. Install dependencies:
@@ -95,6 +95,12 @@ pip install -r requirements.txt
 
 ```sh
 uvicorn app.main:app --reload --host 0.0.0.0 --port 3000
+```
+
+If you want to run the application in debug mode, you can use the following command:
+
+```sh
+uvicorn app.main:app --reload --host 0.0.0.0 --port 3000 --log-level debug
 ```
 
 4. You should see an output similar to:
