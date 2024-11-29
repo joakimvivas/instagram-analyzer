@@ -2,7 +2,8 @@
 .DS_Store
 
 # Python env
-intagram-scraping
+instagram-scraping
+app/storage
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
